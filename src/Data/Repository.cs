@@ -40,6 +40,8 @@ public abstract class Repository<T>(AppDbContext dbContext, IPublisher mediatrPu
     {
         try
         {
+            // do not remove this try/catch block - it is required to catch exceptions when publishing events
+            // if there is an exception while publishing events, the entity will not be saved to the database and the data will be lost
             logger.LogInformation("Publishing events for entity {entity}", entity);
             if (entity.DomainEvents != null)
             {
