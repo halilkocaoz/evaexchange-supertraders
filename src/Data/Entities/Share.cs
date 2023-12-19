@@ -1,3 +1,5 @@
+using EvaExchange.API.Infrastructure;
+
 namespace EvaExchange.API.Data.Entities;
 
 public class Share : BaseEntity
@@ -12,7 +14,7 @@ public class Share : BaseEntity
     public void Update(decimal price)
     {
         if (UpdatedAt.HasValue && UpdatedAt.Value > DateTime.UtcNow.AddHours(-1))
-            throw new Exception("Cannot update more than once per one hour.");
+            throw new ApiException(400, "Cannot update more than once per one hour.");
         
         Price = price;
         UpdatedAt = DateTime.UtcNow;
