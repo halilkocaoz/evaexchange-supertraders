@@ -14,7 +14,7 @@
   - total share rate - 2 digit, decimal
   - on the market rate
   - price
-  - updating just once in a hour.
+  - updating just once in a hour. -- updating needs auth?
 
 - write trades api
 
