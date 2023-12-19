@@ -1,5 +1,7 @@
 using EvaExchange.API.Data;
 using EvaExchange.API.Data.Repositories;
+using EvaExchange.API.Infrastructure;
+using EvaExchange.API.Infrastructure.Application;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,12 +18,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining(typeof(Program));
-    //todo add behaviors
+    cfg.AddOpenBehavior(typeof(ValidatorBehavior<,>));
 });
 builder.Services.AddScoped<IShareRepository, ShareRepository>();
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
