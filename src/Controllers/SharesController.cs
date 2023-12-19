@@ -1,10 +1,12 @@
 using EvaExchange.API.Application.Shares.Commands;
 using EvaExchange.API.Application.Shares.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EvaExchange.API.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/v1/[controller]")]
 public class SharesController(ISender mediator) : ControllerBase
 {
