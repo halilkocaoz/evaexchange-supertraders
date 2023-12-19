@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EvaExchange.API.Data;
+namespace EvaExchange.API.Data.Repositories;
 
 public interface IRepository<T> where T : BaseEntity
 {
