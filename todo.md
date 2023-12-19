@@ -21,3 +21,7 @@
   - buy
   - sell
   - log transactions
+
+- add balance to user
+- add balance controls
+- lock database while buy and sell
