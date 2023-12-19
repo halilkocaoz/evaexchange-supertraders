@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /App
 
 # Copy everything
-COPY ./src/EvaExchange.API/ EvaExchange.API/
+COPY ./src/ EvaExchange.API/
 # Restore as distinct layers
 RUN dotnet restore EvaExchange.API/
 # Build and publish a release

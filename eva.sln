@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{358748A3-92ED-472E-BCF4-A821BB61D58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvaExchange.API", "src\EvaExchange.API\EvaExchange.API.csproj", "{CA013E79-B5D1-4D84-A087-E137A1D1DDFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvaExchange.API", "src\EvaExchange.API.csproj", "{CA013E79-B5D1-4D84-A087-E137A1D1DDFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
