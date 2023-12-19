@@ -5,8 +5,8 @@ namespace EvaExchange.API.Data;
 
 public class BaseEntity
 {
-    public DateTime CreatedAt { get; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
 
     private List<INotification> _domainEvents;
 
@@ -14,7 +14,7 @@ public class BaseEntity
 
     protected void AddDomainEvent(INotification eventItem)
     {
-        _domainEvents ??= new List<INotification>();
+        _domainEvents ??= [];
         _domainEvents.Add(eventItem);
     }
 
