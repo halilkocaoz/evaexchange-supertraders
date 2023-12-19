@@ -8,6 +8,7 @@ public class User : BaseEntity
         Email = email;
         // todo: hash password
         Password = password;
+        Balance = 1000;
     }
     
     public bool PasswordMatches(string password)
@@ -19,6 +20,8 @@ public class User : BaseEntity
     public string Id { get; init; }
     public string Email { get; private set; }
     public string Password { get; private set; }
+
+    public decimal Balance { get; set; }
     
     public IEnumerable<UserShares> Shares { get; set; }
 }

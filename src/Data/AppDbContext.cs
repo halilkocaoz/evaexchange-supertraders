@@ -23,6 +23,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<User>().Property(x => x.Email).HasMaxLength(255).IsRequired();
         modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
         modelBuilder.Entity<User>().Property(x => x.Password).HasMaxLength(1000).IsRequired();
+        modelBuilder.Entity<User>().Property(x => x.Balance).HasColumnType("numeric(18,2)");
 
         modelBuilder.Entity<UserShares>().ToTable("UserShares");
         modelBuilder.Entity<UserShares>().HasKey(x => new {x.UserId, x.ShareId});
