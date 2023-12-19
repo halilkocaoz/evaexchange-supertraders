@@ -1,4 +1,16 @@
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: monolith-api
+    ports:
+      - "8000:8080"
+    networks:
+      - eva
+    depends_on:
+      - db
+    restart: always
   db:
     image: postgres
     container_name: postgres
