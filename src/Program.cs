@@ -1,7 +1,10 @@
+using EvaExchange.API.Application.Shares.Commands;
+using EvaExchange.API.Application.Shares.Validators;
 using EvaExchange.API.Data;
 using EvaExchange.API.Data.Repositories;
 using EvaExchange.API.Infrastructure;
 using EvaExchange.API.Infrastructure.Application;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +24,8 @@ builder.Services.AddMediatR(cfg =>
     cfg.AddOpenBehavior(typeof(ValidatorBehavior<,>));
 });
 builder.Services.AddScoped<IShareRepository, ShareRepository>();
+builder.Services.AddSingleton<IValidator<CreateShareCommand>, CreateShareCommandValidator>();
+builder.Services.AddSingleton<IValidator<UpdateShareCommand>, UpdateShareCommandValidator>();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
