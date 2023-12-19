@@ -55,6 +55,7 @@ builder.Services.AddAuthentication(x =>
         ClockSkew = TimeSpan.Zero
     };
 });
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlerMiddleware>();

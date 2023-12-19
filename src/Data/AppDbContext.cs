@@ -11,6 +11,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         modelBuilder.Entity<Share>().ToTable("Shares");
         modelBuilder.Entity<Share>().HasKey(x => x.Id);
+        modelBuilder.Entity<Share>().Property(x => x.CreatorUserId).HasMaxLength(36);
+        modelBuilder.Entity<Share>().HasIndex(x => x.CreatorUserId);
         modelBuilder.Entity<Share>().Property(x => x.Id).HasColumnType("char(3)");
         modelBuilder.Entity<Share>().Property(x => x.Rate).HasColumnType("numeric(18,2)");
         modelBuilder.Entity<Share>().Property(x => x.Price).HasColumnType("numeric(18,2)");
