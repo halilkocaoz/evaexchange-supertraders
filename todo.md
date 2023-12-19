@@ -1,6 +1,6 @@
 # ToDos - monolith
 
-- dockerize webapi with postgres database
+- dockerize webapi with postgres database ✅
 - write users api - oauth2 with basic implementations signup-signin
 
   - userportfolio
