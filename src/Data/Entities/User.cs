@@ -19,4 +19,6 @@ public class User : BaseEntity
     public string Id { get; init; }
     public string Email { get; private set; }
     public string Password { get; private set; }
+    
+    public IEnumerable<UserShares> Shares { get; set; }
 }

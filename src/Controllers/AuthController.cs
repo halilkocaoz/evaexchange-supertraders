@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EvaExchange.API.Controllers;
 [Route("api/v1")]
-public class UsersController(IMediator mediator) : ControllerBase
+public class AuthController(IMediator mediator) : ControllerBase
 {
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn([FromBody] SignInCommand command)
