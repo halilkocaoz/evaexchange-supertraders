@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EvaExchange.API.Controllers;
 
 [Authorize(AuthenticationSchemes = "Bearer")]
-[Route("api/v1/[controller]")]
+[Route("api/v1/shares")]
 public class SharesController(ISender mediator) : ControllerBase
 {
     [HttpGet]

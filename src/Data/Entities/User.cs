@@ -2,10 +2,11 @@ namespace EvaExchange.API.Data.Entities;
 
 public class User : BaseEntity
 {
-    public User(string email, string password)
+    public User(string email, string password, string fullName)
     {
         Id = Guid.NewGuid().ToString();
         Email = email;
+        FullName = fullName;
         // todo: hash password
         Password = password;
         Balance = 1000;
@@ -17,11 +18,16 @@ public class User : BaseEntity
         return Password == password;
     }
     
+    public void UpdateBalance(decimal amount)
+    {
+        Balance += amount;
+    }
+    
     public string Id { get; init; }
     public string Email { get; private set; }
+    public string FullName { get; private set; }
     public string Password { get; private set; }
-
-    public decimal Balance { get; set; }
+    public decimal Balance { get; private set; }
     
     public IEnumerable<UserShares> Shares { get; set; }
 }

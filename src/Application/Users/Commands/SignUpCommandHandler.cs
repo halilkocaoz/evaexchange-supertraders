@@ -7,7 +7,7 @@ using MediatR;
 
 namespace EvaExchange.API.Application.Users.Commands;
 
-public record SignUpCommand(string Email, string Password) : IRequest<TokenModel>;
+public record SignUpCommand(string Email, string Password, string FullName) : IRequest<TokenModel>;
 
 public class SignUpCommandHandler(IUserRepository userRepository, ITokenService tokenService)
     : IRequestHandler<SignUpCommand, TokenModel>
@@ -18,7 +18,7 @@ public class SignUpCommandHandler(IUserRepository userRepository, ITokenService 
         if (user != null)
             throw new ApiException(400, $"User with email {request.Email} already exists.");
         
-        user = new User(request.Email, request.Password);
+        user = new User(request.Email, request.Password, request.FullName);
         await userRepository.AddAsync(user);
         return tokenService.GenerateToken(user);
     }
