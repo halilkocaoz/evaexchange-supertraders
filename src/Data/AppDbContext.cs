@@ -12,7 +12,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Share>().HasKey(x => x.Id);
         modelBuilder.Entity<Share>().Property(x => x.Id).HasMaxLength(3).HasColumnType("char(3)");
         modelBuilder.Entity<Share>().Property(x => x.Rate).HasColumnType("numeric(18,2)");
-
+        modelBuilder.Entity<Share>().Property(x => x.Price).HasColumnType("numeric(18,2)");
         
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
