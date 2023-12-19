@@ -12,9 +12,9 @@ public class Share : BaseEntity
         CreatorUserId = creatorUserId;
     }
     
-    public void Update(decimal price, string userId)
+    public void Update(decimal price, string updaterUserId)
     {
-        if (CreatorUserId != userId)
+        if (CreatorUserId != updaterUserId)
             throw new ApiException(400, "Cannot update share created by another user.");
         
         if (UpdatedAt.HasValue && UpdatedAt.Value > DateTime.UtcNow.AddHours(-1))
