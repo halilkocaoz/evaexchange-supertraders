@@ -13,6 +13,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Share>().Property(x => x.Id).HasMaxLength(3).HasColumnType("char(3)");
         modelBuilder.Entity<Share>().Property(x => x.Rate).HasColumnType("numeric(18,2)");
         modelBuilder.Entity<Share>().Property(x => x.Price).HasColumnType("numeric(18,2)");
+
+        modelBuilder.Entity<User>().ToTable("Users");
+        modelBuilder.Entity<User>().HasKey(x => x.Id);
+        modelBuilder.Entity<User>().Property(x => x.Id).HasMaxLength(36);
+        modelBuilder.Entity<User>().Property(x => x.Email).HasMaxLength(255).IsRequired();
+        modelBuilder.Entity<User>().Property(x => x.Password).HasMaxLength(1000).IsRequired();
         
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
