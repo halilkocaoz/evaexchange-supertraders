@@ -13,6 +13,8 @@
   - id - 3 len char
   - total share rate - 2 digit, decimal
   - on the market rate
+  - price
+  - updating just once in a hour.
 
 - write trades api
 
