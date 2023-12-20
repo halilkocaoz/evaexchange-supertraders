@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "35e8c47c-71de-45b2-b54b-63b34c5f5617",
+		"name": "EvaExchange.API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18365191"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "me",
+							"item": [
+								{
+									"name": "/api/v1/me",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/me",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"me"
+											]
+										},
+										"description": "Returns Authenticated User info."
+									},
+									"response": []
+								},
+								{
+									"name": "/api/v1/me/shares",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/me/shares",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"me",
+												"shares"
+											]
+										},
+										"description": "Returns shares which are created by Authenticated User."
+									},
+									"response": []
+								},
+								{
+									"name": "/api/v1/me/portfolio",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/me/portfolio",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"me",
+												"portfolio"
+											]
+										},
+										"description": "Returns Authenticated User portfolio."
+									},
+									"response": []
+								}
+							],
+							"description": "Authorized User APIs"
+						},
+						{
+							"name": "shares",
+							"item": [
+								{
+									"name": "/api/v1/shares",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/shares",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"shares"
+											]
+										},
+										"description": "Returns the all shares by created users."
+									},
+									"response": []
+								},
+								{
+									"name": "/api/v1/shares",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"TST\",\n  \"rate\": 49.50,\n  \"price\": 105.25\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/shares",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"shares"
+											]
+										},
+										"description": "Creates a share."
+									},
+									"response": []
+								},
+								{
+									"name": "/api/v1/shares/:id",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/shares/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"shares",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "EVA",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "Returns share by given Id."
+									},
+									"response": []
+								},
+								{
+									"name": "/api/v1/shares/:id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"price\": 117.75\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/shares/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"shares",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "TST",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "Updates the given share."
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "trade",
+							"item": [
+								{
+									"name": "/api/v1/trade/buy",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"shareId\": \"TST\",\n    \"rate\": 0.01\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/trade/buy",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"trade",
+												"buy"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/api/v1/trade/sell",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"shareId\": \"TST\",\n    \"rate\": 0.25\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/trade/sell",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"trade",
+												"sell"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "Trade APIs"
+						},
+						{
+							"name": "/api/v1/signin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\" : \"founder@eva.guru\",\n    \"password\" : \"pass123*\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/signin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/v1/signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\" : \"halil.i.kocaoz@gmail.com\",\n    \"password\" : \"1234\",\n    \"fullName\" : \"Halil Ibrahim Kocaoz\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "please pass your token here",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000"
+		}
+	]
+}
