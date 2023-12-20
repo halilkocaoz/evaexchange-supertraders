@@ -36,12 +36,12 @@ public class TradeOperations(
         {
             if (userShare == null) // buy new share
             {
-                userShare = new UserShares(userId, shareId, availableShareRate, buyingRate);
+                userShare = new UserShares(userId, shareId, availableShareRate, buyingRate, share);
                 userShareRepository.AddAsync(userShare).GetAwaiter().GetResult();
             }
             else // buy more rate of the share
             {
-                userShare.Buy(availableShareRate, buyingRate);
+                userShare.Buy(availableShareRate, buyingRate, share);
                 userShare.Share = null;
                 userShareRepository.UpdateAsync(userShare).GetAwaiter().GetResult();
             }

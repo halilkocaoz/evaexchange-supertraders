@@ -9,21 +9,23 @@ public class UserShares : BaseEntity
     {
     }
 
-    public UserShares(string userId, string shareId, decimal availableShareRate, decimal rate)
+    public UserShares(string userId, string shareId, decimal availableShareRate, decimal rate, Share share)
     {
         UserId = userId;
         ShareId = shareId;
-        Buy(availableShareRate, rate);
+        Buy(availableShareRate, rate, share);
     }
 
-    public void Buy(decimal availableShareRate, decimal buyingRate)
+    public void Buy(decimal availableShareRate, decimal buyingRate, Share share)
     {
+        if (share?.CreatorUserId == UserId)
+            throw new ApiException(400, "Cannot buy the Share which is created by you.");
         if (availableShareRate < buyingRate)
             throw new ApiException(400, "Buying rate is higher than the available share rate.");
 
         Rate += buyingRate;
         UpdatedAt = DateTime.UtcNow;
-        AddDomainEvent(new TradeCompletedEvent(UserId, ShareId, buyingRate, Share.Price, TradeType.Buy));
+        AddDomainEvent(new TradeCompletedEvent(UserId, ShareId, buyingRate, share?.Price ?? 0, TradeType.Buy));
     }
 
     public void Sell(decimal sellingRate)
