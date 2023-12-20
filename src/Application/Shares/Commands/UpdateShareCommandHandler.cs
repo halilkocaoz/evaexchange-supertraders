@@ -13,7 +13,6 @@ public class UpdateShareCommand : IRequest<Share>
     public decimal Price { get; set; }
 }
 
-
 public class UpdateShareCommandHandler(IShareRepository shareRepository, IHttpContextAccessor httpContextAccessor) : IRequestHandler<UpdateShareCommand, Share>
 {
     public async Task<Share> Handle(UpdateShareCommand request, CancellationToken cancellationToken)
