@@ -1,3 +1,5 @@
+using EvaExchange.API.Infrastructure;
+
 namespace EvaExchange.API.Data.Entities;
 
 public class User : BaseEntity
@@ -21,6 +23,12 @@ public class User : BaseEntity
     public void UpdateBalance(decimal amount)
     {
         Balance += amount;
+    }
+    
+    public void ThrowIfInsufficientFunds(decimal buyingRate, decimal price)
+    {
+        if (Balance < buyingRate * price)
+            throw new ApiException(400, "Insufficient funds");
     }
     
     public string Id { get; init; }

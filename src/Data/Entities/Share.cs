@@ -25,7 +25,7 @@ public class Share : BaseEntity
     }
     
     public string Id { get; init; }
-    public string CreatorUserId { get; set; }
+    public string CreatorUserId { get; init; }
     public decimal Rate { get; init; }
     public decimal Price { get; private set; }
 }
