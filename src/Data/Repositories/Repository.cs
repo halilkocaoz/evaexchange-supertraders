@@ -61,23 +61,21 @@ public abstract class Repository<T>(AppDbContext dbContext, IPublisher mediatrPu
 
     public virtual async Task<T> AddAsync(T entity)
     {
-        var publishEventsTask = PublishEventsAsync(entity);
+        await PublishEventsAsync(entity);
 
         await _table.AddAsync(entity);
         await dbContext.SaveChangesAsync();
 
-        await publishEventsTask;
         return entity;
     }
 
     public virtual async Task<T> UpdateAsync(T entity)
     {
-        var publishEventsTask = PublishEventsAsync(entity);
-
+        await PublishEventsAsync(entity);
+        
         _table.Update(entity);
         await dbContext.SaveChangesAsync();
 
-        await publishEventsTask;
         return entity;
     }
 }

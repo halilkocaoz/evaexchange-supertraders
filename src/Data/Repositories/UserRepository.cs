@@ -9,13 +9,9 @@ public interface IUserRepository : IRepository<User>
     Task<User> GetByEmailAsync(string email);
 }
 
-public class UserRepository : Repository<User>, IUserRepository
+public class UserRepository(AppDbContext dbContext, IPublisher mediatrPublisher, ILogger<User> logger)
+    : Repository<User>(dbContext, mediatrPublisher, logger), IUserRepository
 {
-    public UserRepository(AppDbContext dbContext, IPublisher mediatrPublisher, ILogger<User> logger) :
-        base(dbContext, mediatrPublisher, logger)
-    {
-    }
-
     public Task<User> GetByEmailAsync(string email)
     {
         return GetAsQueryable().FirstOrDefaultAsync(u => u.Email == email);
