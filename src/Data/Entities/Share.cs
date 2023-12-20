@@ -15,7 +15,7 @@ public class Share : BaseEntity
     public void Update(decimal price, string updaterUserId)
     {
         if (CreatorUserId != updaterUserId)
-            throw new ApiException(400, "Cannot update share created by another user.");
+            throw new ApiException(400, "Cannot update the Share which is created by another user.");
         
         if (UpdatedAt.HasValue && UpdatedAt.Value > DateTime.UtcNow.AddHours(-1))
             throw new ApiException(400, "Cannot update more than once per one hour.");

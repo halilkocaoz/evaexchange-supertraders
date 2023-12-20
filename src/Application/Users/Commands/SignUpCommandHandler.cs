@@ -16,7 +16,7 @@ public class SignUpCommandHandler(IUserRepository userRepository, ITokenService 
     {
         var user = await userRepository.GetByEmailAsync(request.Email);
         if (user != null)
-            throw new ApiException(400, $"User with email {request.Email} already exists.");
+            throw new ApiException(400, $"User with the Email {request.Email} already exists.");
         
         user = new User(request.Email, request.Password, request.FullName);
         await userRepository.AddAsync(user);

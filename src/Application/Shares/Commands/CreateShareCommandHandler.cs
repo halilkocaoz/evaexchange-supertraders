@@ -14,7 +14,7 @@ public class CreateShareCommandHandler(IShareRepository repository, IHttpContext
     {
         var share = await repository.GetByIdAsync(request.Id);
         if (share != null)
-            throw new ApiException(400, $"Share with id {request.Id} already exists.");
+            throw new ApiException(400, $"Share with the Id {request.Id} already exists.");
         
         var userId = httpContextAccessor.HttpContext!.User.GetUserId();
         share = new Share(request.Id, request.Rate, request.Price, userId);
