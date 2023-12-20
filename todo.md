@@ -12,16 +12,16 @@
 
   - id - 3 len char ✅
   - total share rate - 2 digit, decimal ✅
-  - on the market rate
+  - on the market rate ✅
   - price ✅
   - updating just once in a hour. -- updating needs auth? ✅
 
 - write trades api
 
-  - buy
-  - sell
-  - log transactions
+  - buy ✅
+  - sell ✅
+  - log transactions ✅
 
-- add balance to user
-- add balance controls
-- lock database while buy and sell
+- add balance to user ✅
+- add balance controls ✅
+- lock database while buy and sell ✅
