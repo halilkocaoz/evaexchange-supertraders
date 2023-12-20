@@ -5,7 +5,7 @@ namespace EvaExchange.API.Infrastructure;
 
 public class ExceptionHandlerMiddleware(RequestDelegate next)
 {
-    public async Task Invoke(HttpContext context)
+    public async Task Invoke(HttpContext context, ILogger<ExceptionHandlerMiddleware> logger)
     {
         try
         {
@@ -29,11 +29,12 @@ public class ExceptionHandlerMiddleware(RequestDelegate next)
             await context.Response.WriteAsync(JsonSerializer.Serialize(new
             {
                 message = exception.Message,
-                code = exception.Code
+                code = exception.Code ?? exception.StatusCode,
             }));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            logger.LogError(e, "Unhandled exception.");
             context.Response.StatusCode = 500;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonSerializer.Serialize(new

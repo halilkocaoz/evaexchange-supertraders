@@ -4,6 +4,7 @@ using EvaExchange.API.Application.Shares.Validators;
 using EvaExchange.API.Application.Users.Commands;
 using EvaExchange.API.Application.Users.Validators;
 using EvaExchange.API.Data;
+using EvaExchange.API.Data.Entities;
 using EvaExchange.API.Data.Repositories;
 using EvaExchange.API.Infrastructure;
 using EvaExchange.API.Infrastructure.Application;
@@ -24,46 +25,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssemblyContaining(typeof(Program));
-    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
-    cfg.AddOpenBehavior(typeof(ValidatorBehavior<,>));
-});
-builder.Services.AddSingleton<IValidator<CreateShareCommand>, CreateShareCommandValidator>();
-builder.Services.AddSingleton<IValidator<UpdateShareCommand>, UpdateShareCommandValidator>();
-builder.Services.AddSingleton<IValidator<SignInCommand>, SignInCommandValidator>();
-builder.Services.AddSingleton<IValidator<SignUpCommand>, SignUpCommandValidator>();
 
-builder.Services.AddScoped<IShareRepository, ShareRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<ITokenService, TokenService>();
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o =>
-{
-    o.SaveToken = true;
-    o.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidateIssuer = false, // should be true in production
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        ValidateAudience = false, // should be true in production
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ??
-                                                                           throw new ArgumentNullException(
-                                                                               "Jwt:Key is missing"))),
-        ClockSkew = TimeSpan.Zero
-    };
-});
-builder.Services.AddHttpContextAccessor();
+AddMediatR();
+AddInjections();
+AddAuthentication();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -77,5 +45,104 @@ app.UseAuthentication();
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 await dbContext.Database.MigrateAsync();
+await SeedAsync(dbContext);
 
 app.Run();
+return;
+
+void AddMediatR()
+{
+    builder.Services.AddMediatR(cfg =>
+    {
+        cfg.RegisterServicesFromAssemblyContaining(typeof(Program));
+        cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+        cfg.AddOpenBehavior(typeof(ValidatorBehavior<,>));
+    });
+    builder.Services.AddSingleton<IValidator<CreateShareCommand>, CreateShareCommandValidator>();
+    builder.Services.AddSingleton<IValidator<UpdateShareCommand>, UpdateShareCommandValidator>();
+    builder.Services.AddSingleton<IValidator<SignInCommand>, SignInCommandValidator>();
+    builder.Services.AddSingleton<IValidator<SignUpCommand>, SignUpCommandValidator>();
+}
+
+void AddInjections()
+{
+    builder.Services.AddScoped<IShareRepository, ShareRepository>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IUserShareRepository, UserShareRepository>();
+    builder.Services.AddScoped<ITradeOperations, TradeOperations>();
+    
+    builder.Services.AddSingleton<ITokenService, TokenService>();
+}
+
+void AddAuthentication()
+{
+    builder.Services.AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(o =>
+    {
+        o.SaveToken = true;
+        o.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidateIssuer = false,
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ??
+                                                                               throw new ArgumentNullException(
+                                                                                   "Jwt:Key is missing"))),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+    builder.Services.AddHttpContextAccessor();
+}
+
+Task SeedAsync(AppDbContext context)
+{
+    var testUser =  new User("test@test.com", "test", "Test User");
+    var evaFounderUser = new User("founder@eva.guru", "pass123*", "Eva Founder");
+    
+    if (context.Users.Any() is false)
+    {
+        context.Users.AddRange(testUser, evaFounderUser);
+    }
+
+    if (context.Shares.Any() is false)
+    {
+        context.Shares.AddRange(new List<Share>
+        {
+            new("TST", 49.50m, 100, testUser.Id),
+            new("EVA", 25.75m, 225.15m, evaFounderUser.Id),
+        });
+    }
+
+    if (context.UserShares.Any() is false)
+    {
+        context.UserShares.AddRange(new List<UserShares>
+        {
+            new()
+            {
+                UserId = testUser.Id,
+                ShareId = "EVA",
+                Rate = 1.5m,
+            },
+            new()
+            {
+                UserId = evaFounderUser.Id,
+                ShareId = "TST",
+                Rate = 3.3m,
+            },
+            new()
+            {
+                UserId = evaFounderUser.Id,
+                ShareId = "EVA",
+                Rate = 3m,
+            }
+        });
+    }
+        
+    return context.SaveChangesAsync();
+}
