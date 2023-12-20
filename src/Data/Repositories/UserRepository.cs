@@ -16,8 +16,8 @@ public class UserRepository : Repository<User>, IUserRepository
     {
     }
 
-    public async Task<User> GetByEmailAsync(string email)
+    public Task<User> GetByEmailAsync(string email)
     {
-        return await GetAsQueryable().FirstOrDefaultAsync(u => u.Email == email);
+        return GetAsQueryable().FirstOrDefaultAsync(u => u.Email == email);
     }
 }

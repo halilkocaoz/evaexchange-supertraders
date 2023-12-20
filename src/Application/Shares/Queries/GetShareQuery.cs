@@ -8,8 +8,8 @@ public record GetShareQuery(string Id) : IRequest<Share>;
 
 public class GetShareQueryHandler(IShareRepository repository) : IRequestHandler<GetShareQuery, Share>
 {
-    public async Task<Share> Handle(GetShareQuery request, CancellationToken cancellationToken)
+    public Task<Share> Handle(GetShareQuery request, CancellationToken cancellationToken)
     {
-        return await repository.GetByIdAsync(request.Id);
+        return repository.GetByIdAsync(request.Id);
     }
 }

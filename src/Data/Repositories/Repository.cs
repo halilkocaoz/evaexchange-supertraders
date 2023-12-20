@@ -26,9 +26,9 @@ public abstract class Repository<T>(AppDbContext dbContext, IPublisher mediatrPu
             : _table.Where(predicate);
     }
 
-    public virtual async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
+    public virtual Task<T> GetAsync(Expression<Func<T, bool>> predicate)
     {
-        return await _table.FirstOrDefaultAsync(predicate);
+        return _table.FirstOrDefaultAsync(predicate);
     }
 
     public virtual async Task<T> GetByIdAsync(object id)

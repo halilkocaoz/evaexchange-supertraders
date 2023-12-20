@@ -12,8 +12,8 @@ public interface IShareRepository : IRepository<Share>
 public class ShareRepository(AppDbContext dbContext, IPublisher mediatrPublisher, ILogger<Share> logger) :
     Repository<Share>(dbContext, mediatrPublisher, logger), IShareRepository
 {
-    public async Task<List<Share>> GetAllAsync()
+    public Task<List<Share>> GetAllAsync()
     {
-        return await GetAsQueryable().ToListAsync();
+        return GetAsQueryable().ToListAsync();
     }
 }

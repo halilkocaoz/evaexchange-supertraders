@@ -9,7 +9,7 @@ public class ValidatorBehavior<TRequest, TResponse>(
     ILogger<ValidatorBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
+    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
         var typeName = request.GetGenericTypeName();
@@ -23,7 +23,7 @@ public class ValidatorBehavior<TRequest, TResponse>(
             .ToList();
 
         if (failures.Count == 0)
-            return await next();
+            return next();
 
         logger.LogWarning("Validation errors - {CommandType} - Command: {@Command} - Errors: {@ValidationErrors}",
             typeName,

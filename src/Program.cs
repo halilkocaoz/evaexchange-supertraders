@@ -1,6 +1,8 @@
 using System.Text;
 using EvaExchange.API.Application.Shares.Commands;
 using EvaExchange.API.Application.Shares.Validators;
+using EvaExchange.API.Application.Users.Commands;
+using EvaExchange.API.Application.Users.Validators;
 using EvaExchange.API.Data;
 using EvaExchange.API.Data.Repositories;
 using EvaExchange.API.Infrastructure;
@@ -30,6 +32,8 @@ builder.Services.AddMediatR(cfg =>
 });
 builder.Services.AddSingleton<IValidator<CreateShareCommand>, CreateShareCommandValidator>();
 builder.Services.AddSingleton<IValidator<UpdateShareCommand>, UpdateShareCommandValidator>();
+builder.Services.AddSingleton<IValidator<SignInCommand>, SignInCommandValidator>();
+builder.Services.AddSingleton<IValidator<SignUpCommand>, SignUpCommandValidator>();
 
 builder.Services.AddScoped<IShareRepository, ShareRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
