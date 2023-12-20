@@ -1,4 +1,15 @@
 services:
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${MONOLITH_DB_NAME}
+    ports:
+      - "1234:5432"
+    networks:
+      - eva
   api:
     build:
       context: .
@@ -11,17 +22,6 @@ services:
     depends_on:
       - db
     restart: always
-  db:
-    image: postgres
-    container_name: postgres
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${MONOLITH_DB_NAME}
-    ports:
-      - "1234:5432"
-    networks:
-      - eva
 
 networks:
   eva:
