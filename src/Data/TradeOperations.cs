@@ -20,6 +20,8 @@ public class TradeOperations(
 
     public async Task<UserShares> BuyAsync(string userId, string shareId, decimal buyingRate)
     {
+        buyingRate = Math.Round(buyingRate, 2, MidpointRounding.ToZero);
+        
         var share = await shareRepository.GetByIdAsync(shareId);
         if (share is null)
             throw new ApiException(400, "Share does not exist");
@@ -62,6 +64,8 @@ public class TradeOperations(
 
     public async Task<UserShares> SellAsync(string userId, string shareId, decimal sellingRate)
     {
+        sellingRate = Math.Round(sellingRate, 2, MidpointRounding.ToZero);
+
         var userShare = await userShareRepository.GetPortfolioAsync(userId, shareId);
         if (userShare is null)
             throw new ApiException(400, "User does not own this share");
