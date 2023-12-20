@@ -3,6 +3,7 @@ using System;
 using EvaExchange.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EvaExchange.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220093426_ADD_BaseEntityForPortfolio")]
+    partial class ADD_BaseEntityForPortfolio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace EvaExchange.API.Migrations
                         .HasColumnType("character varying(36)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric(18,6)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<decimal>("Rate")
                         .HasColumnType("numeric(18,2)");
@@ -50,35 +53,6 @@ namespace EvaExchange.API.Migrations
                     b.ToTable("Shares", (string)null);
                 });
 
-            modelBuilder.Entity("EvaExchange.API.Data.Entities.Trade", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric(18,6)");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<string>("ShareId")
-                        .IsRequired()
-                        .HasColumnType("char(3)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Trades", (string)null);
-                });
-
             modelBuilder.Entity("EvaExchange.API.Data.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -86,7 +60,7 @@ namespace EvaExchange.API.Migrations
                         .HasColumnType("character varying(36)");
 
                     b.Property<decimal>("Balance")
-                        .HasColumnType("numeric(18,6)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
